@@ -1,0 +1,45 @@
+version: "3.2"
+
+services:
+  web:
+    image: elestio4test/attendize-web:latest
+    ports:
+      # - "172.17.0.1:8080:80"
+      - "172.17.0.1:20403:443"
+    volumes:
+      - ./storage:/usr/share/nginx/html
+      - ./storage:/var/www
+    depends_on:
+      - db
+      - redis
+      - worker
+    env_file:
+      - ./.env
+  worker:
+    image: elestio4test/attendize-worker:latest
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - ./storage:/usr/share/nginx/html
+      - ./storage:/var/www
+  db:
+    image: elestio/mysql:8.0
+    restart: always
+    env_file:
+      - ./.env
+    environment:
+      MYSQL_ROOT_PASSWORD: "yes"
+      MYSQL_HOST: ${DB_HOST}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "172.17.0.1:3306:3306"
+    volumes:
+      - "./storage/mysql:/var/lib/mysql"
+  redis:
+    image: elestio/redis:7.0
+    volumes:
+      - ./storage/redis:/data
+    command: --requirepass ${REDIS_PASSWORD}

@@ -6,7 +6,7 @@ set -o allexport; source temp.env; set +o allexport;
 echo "Waiting for software to be ready ..."
 sleep 30s;
 
-docker-compose exec web sh -c 'wait-for-it db:3306 -t 180 && php artisan optimize:clear && php artisan key:generate && php artisan config:cache && php artisan migrate'
+echo "y" | docker-compose exec -T web sh -c 'wait-for-it db:3306 -t 180 && php artisan optimize:clear && php artisan key:generate && php artisan config:cache && php artisan migrate'
 docker-compose down;
 docker-compose up -d
 

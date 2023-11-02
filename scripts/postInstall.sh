@@ -11,7 +11,7 @@ docker-compose down;
 docker-compose up -d
 
 echo "Restarting..."
-sleep 200s
+sleep 300s
 
 cookie_file="cookies.txt"
 curlResponse=$(curl -s $APP_URL/install -c "$cookie_file")

@@ -1,6 +1,11 @@
 #set env vars
 set -o allexport; source .env; set +o allexport;
 
+cat << EOT >> ./.env
+
+APP_KEY=
+EOT
+
 cat << EOT >> ./temp.env
 
 TEMP_ADMIN_EMAIL=${ADMIN_EMAIL}

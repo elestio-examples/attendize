@@ -39,8 +39,6 @@ environments:
     value: "false"
   - key: "APP_NAME"
     value: "Attendize"
-  - key: "APP_KEY"
-    value: "random_password-random_password-random_password"
   - key: "APP_DEBUG"
     value: "true"
   - key: "APP_URL"

@@ -1,0 +1,1 @@
+sed -i "s~set -o allexport; source temp.env; set +o allexport;~~g" ./scripts/postInstall.sh

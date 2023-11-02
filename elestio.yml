@@ -7,6 +7,23 @@ ports:
     public: true
     path: "/"
     isAuth: false
+  - protocol: "HTTPS"
+    targetProtocol: "HTTP"
+    listeningPort: "23121"
+    targetPort: "61927"
+    targetIP: "172.17.0.1"
+    public: true
+    path: "/"
+    isAuth: true
+    login: "root"
+    password: "random_password"
+    loginTitle: "PHPMyAdmin"
+  - protocol: "TCP"
+    targetProtocol: "TCP"
+    listeningPort: "3927"
+    targetIP: "172.17.0.1"
+    targetPort: "41525"
+    public: true
 environments:
   - key: "SOFTWARE_VERSION_TAG"
     value: "latest"

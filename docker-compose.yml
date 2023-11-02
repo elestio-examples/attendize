@@ -2,13 +2,13 @@ version: "3.2"
 
 services:
   web:
+    user: 0:0
     image: elestio4test/attendize-web:latest
     ports:
-      # - "172.17.0.1:8080:80"
       - "172.17.0.1:20403:443"
     volumes:
-      - ./storage:/usr/share/nginx/html
-      - ./storage:/var/www
+      - ./.env:/usr/share/nginx/html/.env
+      - ./config/Install.php:/usr/share/nginx/html/app/Console/Commands/Install.php
     depends_on:
       - db
       - redis
@@ -16,13 +16,13 @@ services:
     env_file:
       - ./.env
   worker:
+    user: 0:0
     image: elestio4test/attendize-worker:latest
     depends_on:
       - db
       - redis
     volumes:
-      - ./storage:/usr/share/nginx/html
-      - ./storage:/var/www
+      - ./.env:/usr/share/nginx/html/.env
   db:
     image: elestio/mysql:8.0
     restart: always
@@ -35,7 +35,7 @@ services:
       MYSQL_USER: ${DB_USERNAME}
       MYSQL_PASSWORD: ${DB_PASSWORD}
     ports:
-      - "172.17.0.1:3306:3306"
+      - "172.17.0.1:41525:3306"
     volumes:
       - "./storage/mysql:/var/lib/mysql"
   redis:
@@ -43,3 +43,21 @@ services:
     volumes:
       - ./storage/redis:/data
     command: --requirepass ${REDIS_PASSWORD}
+
+  pma:
+    image: elestio/phpmyadmin:latest
+    restart: always
+    links:
+      - db:db
+    ports:
+      - "172.17.0.1:61927:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: ${ADMIN_PASSWORD}
+      UPLOAD_LIMIT: 500M
+      MYSQL_USERNAME: root
+      MYSQL_ROOT_PASSWORD: ${ADMIN_PASSWORD}
+    depends_on:
+      - db

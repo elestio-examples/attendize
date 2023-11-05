@@ -60,6 +60,7 @@ Here are some example snippets to help you get started creating a container.
                 - ./.env:/usr/share/nginx/html/.env
                 - ./config/Install.php:/usr/share/nginx/html/app/Console/Commands/Install.php
                 # - ./config/installed:/usr/share/nginx/html/installed
+                - attendize-public:/usr/share/nginx/html/public/
             depends_on:
                 - db
                 - redis
@@ -112,6 +113,13 @@ Here are some example snippets to help you get started creating a container.
                 MYSQL_ROOT_PASSWORD: ${ADMIN_PASSWORD}
             depends_on:
                 - db
+    volumes:
+        attendize-public:
+            driver: local
+            driver_opts:
+                type: none
+                device: ${PWD}/storage/public
+                o: bind
 
 ### Environment variables
 

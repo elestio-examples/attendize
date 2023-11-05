@@ -11,7 +11,7 @@ docker-compose down;
 docker-compose up -d
 
 echo "Restarting..."
-sleep 350s
+sleep 250s
 
 cookie_file="cookies.txt"
 curlResponse=$(curl -s $APP_URL/install -c "$cookie_file")
@@ -43,6 +43,8 @@ sleep 30s;
 echo "Registering..."
 
 docker-compose exec -T web php artisan attendize:install
+
+sed -i "s~# - ./config/installed:/usr/share/nginx/html/installed~- ./config/installed:/usr/share/nginx/html/installed~g" ./docker-compose.yml
 
 cat << EOT >> ./.env
 

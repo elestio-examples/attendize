@@ -3,7 +3,7 @@ version: "3.2"
 services:
   web:
     user: 0:0
-    image: elestio4test/attendize-web:latest
+    image: elestio/attendize-web:latest
     ports:
       - "172.17.0.1:20403:443"
     volumes:
@@ -18,7 +18,7 @@ services:
       - ./.env
   worker:
     user: 0:0
-    image: elestio4test/attendize-worker:latest
+    image: elestio/attendize-worker:latest
     depends_on:
       - db
       - redis

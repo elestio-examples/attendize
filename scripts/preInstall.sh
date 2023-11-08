@@ -2,7 +2,7 @@
 set -o allexport; source .env; set +o allexport;
 
 mkdir -p ./storage/public
-chmod -R 1000:1000 ./storage/public
+chown -R 1000:1000 ./storage/public
 
 cat << EOT >> ./.env
 

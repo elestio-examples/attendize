@@ -3,7 +3,7 @@ version: "3.2"
 services:
   web:
     user: 0:0
-    image: elestio/attendize-web:latest
+    image: elestio/attendize-web:${SOFTWARE_VERSION_TAG}
     ports:
       - "172.17.0.1:20403:443"
     volumes:

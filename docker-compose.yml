@@ -4,6 +4,7 @@ services:
   web:
     user: 0:0
     image: elestio/attendize-web:${SOFTWARE_VERSION_TAG}
+    restart: always
     ports:
       - "172.17.0.1:20403:443"
     volumes:
@@ -20,6 +21,7 @@ services:
   worker:
     user: 0:0
     image: elestio/attendize-worker:latest
+    restart: always
     depends_on:
       - db
       - redis
@@ -42,6 +44,7 @@ services:
       - "./storage/mysql:/var/lib/mysql"
   redis:
     image: elestio/redis:7.0
+    restart: always
     volumes:
       - ./storage/redis:/data
     command: --requirepass ${REDIS_PASSWORD}
